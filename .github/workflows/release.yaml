@@ -1,0 +1,25 @@
+name: "release"
+
+on:
+  push:
+    branches:
+      - "master"
+
+jobs:
+  release:
+    name: "Release"
+    runs-on: "ubuntu-latest"
+
+    steps:
+      - name: "Build"
+        run: |
+          mkdir -p build
+          gcc -o build/metlo-injection-test-linux-x86_64 -std=c99 -Wall -Wextra src/test_xss_sqli.c src/libinjection_sqli.c src/libinjection_xss.c src/libinjection_html5.c
+
+      - uses: "marvinpinto/action-automatic-releases@latest"
+        with:
+          repo_token: "${{ secrets.GITHUB_TOKEN }}"
+          automatic_release_tag: "latest"
+          title: "Build"
+          files: |
+            build/metlo-injection-test-linux-x86_64

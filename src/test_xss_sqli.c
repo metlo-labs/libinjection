@@ -7,11 +7,11 @@ char* getline2(FILE* f)
     size_t size = 0;
     size_t len  = 0;
     size_t last = 0;
-    char * buf  = NULL;
+    char* buf  = NULL;
     do {
         size += BUFSIZ;
-        buf = realloc(buf,size);
-        fgets(buf+last,size,f);
+        buf = realloc(buf, size);
+        fgets(buf+last, size, f);
         len = strlen(buf);
         last = len - 1;
     } while (!feof(f) && buf[last]!='\n');
@@ -27,7 +27,7 @@ int main() {
     int index = 0;
 
     token = getline2(stdin);
-    while( !feof(stdin) ) {
+    while(!feof(stdin)) {
         slen = strlen(token);
         issqli = libinjection_sqli(token, slen, fingerprint);
         isxss = libinjection_xss(token, slen);
